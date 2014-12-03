@@ -1,0 +1,71 @@
+6章　ファイルの操作
+	6.1 前提
+		ランダムアクセス：何バイト目に書き込むか指定（時間コスト大）
+			RandomAccessFileクラス
+			f.seek(n)でnバイト目を指定
+			f.readByte(),f.writeByte(String s)で読み書き
+
+		シーケンシャルアクセス：順番にしか書き込めない（高速）
+
+
+	6.2 テキストファイル
+		ファイル書き込み
+			FileWriter fw = new FileWriter(fileName,true);//trueなら上書き
+			fw.write(String s);//書き込みを要求（バッファに蓄積））
+			fw.flush();//もしバッファから書き込みが完了していないものがあれば、強制的に書きだす
+			fw.close;//flush()を読んでから行う
+
+		ファイル読み込み（一文字ずつしか読めない）
+			FileReader fr = new FileReader(fileName);
+			fr.skip(long n);//n業読みとばす
+			int i = fr.read();//位置も自分の文字を、int型で返す（読み込む文字がない場合-1）
+			while(i!= -1){
+				char c = (char) i;//キャストすることで文字情報に変換
+			}
+			fr.close()
+
+	6.3　バイナリファイル
+		書き込み:FileOutputStream
+		読み込み:FileInputStream
+			IOExceptionが呼ばれる可能性あり		
+
+		基本的にはバイト列で書き込んでもテキストで書き込んでも、コンピュータが行う処理は同じ
+		文字コードによって日本語は、バイト列への変換手法が異なるため、文字コードを指定しないと違うバイト列になってしまう。
+		FileWriter,FileReaderのコンストラクタでは、文字コードを指定することも可能
+
+	6.4　例外処理
+		実際は以下のように例外処理を行う。
+
+		FileReader fr = null;//catchの時のためにとりあえず初期化
+		try{
+			fr = new FileReader(fileName);
+			//処理を書く
+		}
+		catch(IOException e){
+			System.out.println(e)
+		}
+		finaly{ //close()を行う（例外の可能性あり）
+			try{
+				if(fr!=null){
+					fr.close();//tryが一部でも実行されていれば必ずcloseされる
+				}
+			}
+			catch(IOException e){}//何もできない
+		}
+
+		java7以降ではこう書き換えられる
+		try(
+			FileReader fr = new FileReader(fileName);
+		){
+			//処理
+		}catch(IOException e){
+			//例外処理 fr.close()は自動で行われる
+		}
+
+	6.5 ストリーム
+		大きなデータを全て一気に読み込んだり、書き込んだりすると、メモリオーバーになる恐れが。
+		少しずつデータを小川に流していくStreamという概念が使用される。
+
+		標準出力（System.out）や標準入力(System.in)もストリームの考え方を受け継いでいる。
+		java fileコマンドでは、出力先がデフォルトでディスプレイだが
+		java file >出力先ファイル　とすれば、結果をファイルに書き出せる。

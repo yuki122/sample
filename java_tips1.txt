@@ -1,0 +1,274 @@
+1章　文字列操作
+	1.2　基本メソッド
+		調査
+		public boolean equalsIgnoreCase(String s) 大文字小文字を無視して一致
+		public boolean isEnpty() 空文字
+		検索
+		public boolean contains(String s) sを含むか
+		public boolean startsWith(String s) sで始まるか
+		public boolean endsWith(String s) sで終わるか
+		public int indexOf(String,int s) sは最初から何文字目か
+		public int lastIndexOf(String,int s) sは最後から何文字目か
+		切り出し
+		public char charAt(int Index)
+		public String substring(int start, int end)	
+		変換
+		public String toLowerCase()
+		public String toUpperCase()
+		public String trim()
+		public String replase(String before, String after)
+
+	1.3　連結
+		+		インスタンスが不変なので、毎回newしなおしている
+				連結は遅い
+		StringBuilder	.appned(String)で追加して.toString()を最後に読んで変換
+				メソッドチェーンが可能
+		StringBuffer	スレッドを使ってる場合に用いる
+
+	1.4　正規表現
+		文法
+		1 通常の文字
+			その文字でなければなならない
+		2 .
+			任意の一文字
+		3 *
+			直前の文字の任意の繰り返し
+			.* → すべての文字列
+		4 {}
+			指定回数の繰り返し
+			{n}	n回の繰り返し
+			{n,m}	n回以上m回以下の繰り返し
+			?	0,1回の繰り返し
+			+	1回の繰り返し
+		5 []
+			指定範囲の中の任意の文字
+			[1cf]	→　1cfのうちどれか
+			[a-z]{5} →　aからzのうちどれかが5文字
+			\d 任意の数字
+			\w 英字数字アンダーバー
+			\s 空白文字
+		6 ^
+			先頭
+			^j → 先頭がj
+		7 $
+			末尾
+		
+		メソッド
+		public boolean matches(s)
+		public String[] split(s)
+		public String replaceAll(s,s) 
+	
+	1.5 書式整形
+		public static String format("%付きの文章",値,…)
+			public int size()
+		publid static void printf()
+			String.format("%,5d"円,12000) = 12,000円
+			% 修飾 桁数 型
+				修飾
+				, 3桁ごとに,
+				0 空きを0埋め
+				- 数字を左寄せ
+				+ 符号を表示
+
+				桁数
+				n.m 全桁n,小数点以下m
+
+				型
+				d 整数
+				s 文字
+				f 小数
+				b 真理値
+
+2章　コレクション
+	単独の値を格納　ーー重複不可、順序保証		List
+			　ー重複不可、順序非保証	Set
+	ペアの値を格納　ーー				Map
+
+	2.2 ArrayListの使い方
+		<T> .set(int index, <T> value) index番目を上書き
+		iterator<T> .iterator() イテレーターを返す
+
+		拡張for文可能　for(one : ArrayList/Array){処理}
+
+		イテレータ
+		中身を１つずつ取り出すとき
+		Iterator<T> it = arrayList.iterator(); 
+		while(it.hasNext()){ <T> one = it.next();}
+
+	2.4 Set
+		HashSet 集合（重複なし、順序なし）
+			public boolean add(<T>) 重複していれば無視される
+			１つずつ取り出すときは、拡張for文かイテレーター（順番は非確定）
+		LinkedSet add順に格納され、取り出すことができる
+		TreeSet   自然順序で格納され、取り出せる（Stringなら辞書順になる）
+	
+	2.5 Map
+		HashMap　辞書
+			public Valueの型 put(Key,Value)
+			public boolean containsKey(Key)
+			public boolean containsValue(Value)
+			public Set<Key> keySet()
+		１つずつ要素を取り出すには、keySet()を拡張for文やiteratorで回す
+
+	2.6 その他
+		collectionのネストが可能　Map<String,List<string>>など
+		collection型に自作のクラスを格納するときは、equals()とhashCode()をオーバーライドする
+
+3章　色々な型
+	3.2 ジェネリクス
+		<E> のように予め型を決めないことで、汎用性をもたせる。
+		newの時点で、<E>にStringなどが代入させる。
+		<E extends Character>のように制限することも可能
+	
+	3.3 列挙型
+		列挙されたうちの値しか取ることができない型
+		例
+		public enum Color {RED,BLUE,YELLOW;}
+		public static void printColor(Color c){
+			String color;
+			switch (c){
+			case RED: 
+				color = "red";
+				break;
+			case BLUE: 
+				color = "blue";
+				break;
+			case YELLOW:
+				color = "yellow";
+				break;
+			}
+			System.out.printf("色は%6dです！",color);
+			return;
+		}
+		printColor(Color.RED);
+		
+	3.4 インナークラス
+		メンバクラス
+			static		非staticなものにアクセスしてはいけない
+			非static	非staticなものにアクセスしてよいが、いちいちインスタンス生成の必要
+		ローカルクラス（メソッド内で定義）
+			そのメソッド内でしか利用できない
+			finalのローカル変数（メソッド内）しか参照できない
+			外部のメンバにはアクセス可能
+		匿名クラス（newと同時に親クラスから継承しextend）
+			宣言、new文には親クラス名を用いる
+			メソッド内のローカル変数にはfinalにしかアクセス出来ない
+			外部のメンバにはアクセス可能
+
+4章　基本機能
+	4.1 Objectクラスのメソッド
+		すべてのクラスで以下の5つが継承されている
+		・toString()
+		・equals()
+		・hashCode()
+		・compareTo()
+		・clone()
+	4.2 toString
+		インスタンスをhuman readableなものに変換する。
+		自分でクラスを作るときは
+		toString()をoverrideしておくべき！！
+	4.3 equals
+		等価　==	 同じメモリ番地（完全に同じもの）
+		等値　equals	メモリ番地は違ってもよいが、中身が同じ
+
+		自分で作ったクラスでもequalsをoverrideすべき！！
+			・自身ならtrue
+			・nullならfalse
+			・型が違うならfalse
+			・比較すべきフィールドが等値ならtrue、違えばfalse
+		
+		List.remove(object)では等値なものを探して削除するメソッド
+		overrideしないままでは削除されない可能性も
+	
+	4.4 hashCode
+		equals は比較的時間が掛かる処理
+		よってHashSetなどでは、削除の際に
+		①ハッシュ値でだいたい同じかを判定
+		②だいたい同じものにだけequals判定
+		と処理する。
+
+		hashCodeもoverrideしなければ等値判定がうまく行われない！
+
+	4.5 compareTo()
+		自然順序を決めておくことで、どのフィールドで大小比較をすればいいか宣言しておく
+		Class MyObject implements Comparable <MyObject>{
+			private int number; //比較基準
+
+			public int compareTo(MyObject other){
+				if(this.number > other.number){
+					return 1; //正の数
+				}
+				if (this.number < other.number){
+					return -1; //負の数
+				}
+				//同じ場合
+				return 0;			
+			}
+		}
+
+	4.6 clone()
+		= 代入	同じメモリ番地を引用				→一つのインスタンスに対する変更が、全てに影響（同じ実体を引用しているため）
+		clone 	違うメモリ番地に等値なインスタンスを複製	→一つのインスタンスを変更しても、ほかは変更されない
+
+		等値なものを作るという作業を宣言しなければならない！！
+		clone()のoverride
+		・implements Clonableで実装
+		・public MyObject clone()をoverride
+			新しいインスタンスを作り、すべて同じ値をセットし、返す
+			※注意点
+			値をセットするときに「代入」に注意（result.field = this.field.clone()としなければ、同じ番地のフィールドを共有してしまい、変更も共有される）
+			public にしなければデフォルトではprotectedのため、外部から呼び出せない
+		
+		Clonableクラスはマーカーインタフェイスと呼ばれ、clone()メソッドは何の処理も定義されていない。
+		(overrideなしでは何も実行されず、複製に対応することだけを表明するだけ。）	
+
+
+	4.7 プログラムの終了
+		System.exit(int num)
+			num は 0で正常終了　それ以外で異常終了として扱われる。
+
+	4.8　外部プログラムの実行
+		ProcessBuilder pb = new ProcessBuilder("java","-version");
+		//引数はいくらでもStringを指定できるので、起動オプションを必要なだけ追加可能
+		//引数なしで生成し、pb.command("java","-version")でも可
+		//配列やリストを引数に渡すこともできる
+		pb.start();//起動
+
+		exeなどを実行すれば、アプリケーションを立ち上げることもできる
+
+	4.9 システムプロパティ
+		System.getProperty(key)
+		System.setProperty(key,value)で実行中のシステムプロパティを取得、追加できる。
+		OSや改行コード、javaのバージョンなどがデフォルト。
+
+
+5章　非標準ライブラリ
+	5.1 ライブラリ
+		他人にプログラムを渡す際、コンパイル済みの.classファイル群を.jarファイルにまとめて送ることが一般的。
+	
+	5.2 クラスパス
+		コンパイルや実行の際、デフォルトではカレントのディレクトリしか探索されない。
+		→　クラスパスを宣言しなければならない。
+			・環境変数CLASSPATHに予め記述しておく。
+			・java,javacの際に-cp　dir;dir2;…　オプションで指定する
+
+	5.3 commonslang
+		ライブラリの一つ
+		EqualsBuilder
+			return EqualsBuilder.reflectionEquals(this,other);を実装すれば良い
+		HashBuilder
+			return HashBuilder.reflectionHashCode(this,ohter);を実装すれば良い
+	5.4 logの出力
+		logには重要度を表す段階がある（FATAL,ERROR,WARNなど）
+		logの仕様が変わった時のために（全部修正は面倒）、二段階のlog出力を行う
+			・受付のみで、下のlogライブラリに処理を任せる受付係
+			・実際に処理を行うライブラリ
+			受付係をいじって処理を任せる対象を変えるだけでOK
+	5.5 ライセンス
+		代表的なライセンス
+		BSD系ライセンス
+			著作権表示などをすれば、自由に利用可
+		GPL系ライセンス
+			一部でも当ライブラリを使えば、その全ソースコードを公開しなければならない（要注意）
+
+
