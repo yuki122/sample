@@ -1,0 +1,44 @@
+gitの練習だよ！！
+add 変更をindexに登録する
+pull リモートリポジトリの内容を取得
+commit indexの状態を記録する
+	-m 説明を書き込みコミット
+	-amend 直前のコミットのコメントと内容を変更(addした後に行うとcommitに内容が追加される)
+branch  ブランチを見る
+	+ [brandh] ブランチを作る
+	-d ブランチを削除
+	-f [branch1] [branch2] branch1をbranch2に移動させる
+checkout ブランチの切り替え
+	-b　ブランチを作って切り替え
+reset [commit] HEADとindexの位置を[commit]に変更する
+		commit する前ならreset HEADでindexのみ動かせるのでaddを取り消せる
+	--soft HEADの位置のみを変更する
+	--hard 更にワーキングツリーも変更する
+		ORIG_HEADで直前の変更前を指定できるので、直前の変更を打ち消せる
+revert [commit] HEADの下に[commit]を打ち消した変更を記録する
+merge [commit] commitと統合する。同じ箇所が変更されていて矛盾が発生する場合は手動で統合
+	--squash [commit] commitの枝を取り込む
+rebase [commit] commitに変更内容を追加する
+	競合したら
+	--continue 手動で編集しaddした後に打ち込む
+	--abort rebaseを取り消す
+	-i 結合・削除・書き換え・入れ替えを行う
+		p, pick = use commit 好きなものだけ指定できる
+		r, reword = use commit, but edit the commit message
+		e, edit = use commit, but stop for amending →vi →add → commit --amend →rebase --continue
+		s, squash = use commit, but meld into previous commit →タイトルの衝突を解消 →rebase --continue
+		f, fixup = like "squash", but discard this commit's log message
+		x, exec = run command (the rest of the line) using shell
+push リモートがローカルの内容とmergeを行う
+pull ローカルがリモートの内容とmergeを行う
+fetch リモートの変更履歴をFETCH_HEADに取ってくる（fetch + merge FEATCH_HEAD = pull）
+log 履歴を表示
+	--decorate tagやbranchも表示
+tag タグ一覧を表示
+	-n タグとコメントの一覧を表示
+	+[tag名] 軽量タグをつける
+	-a [tag名] 注釈付きタグ（vi）
+	-am "コメント" [tag]　注釈付きタグ
+	-d [tag] タグの削除 
+cherry-pick [commit … ] 指定したコミットのみ取り出す
+HEAD~n n番遡る ^n n番目の親
