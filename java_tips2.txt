@@ -69,3 +69,60 @@
 		標準出力（System.out）や標準入力(System.in)もストリームの考え方を受け継いでいる。
 		java fileコマンドでは、出力先がデフォルトでディスプレイだが
 		java file >出力先ファイル　とすれば、結果をファイルに書き出せる。
+
+	6.6 フィルタ
+		ストリームの概念を利用すれば、途中で変換を行うフィルタ機能が使える。(暗号化・圧縮など）
+		特徴
+		・Filter 〜クラスを継承
+		・単独では存在できない（すでにあるストリームを引数にnewする）
+		・フィルタの連結が可能
+
+		バッファリングフィルタ
+			データをまとまった単位で処理する
+			BufferReader,BufferWriterなど
+		
+			メリット
+			・ディスクへの読み書きは時間がかかるため、まとめることによって処理速度向上
+			・BufferReader.readLine()などを利用可能
+
+
+7章　様々なファイル形式
+	7.1 データフォーマット
+		複数のデータを保存する際の、形式順序などのルール
+		ファイルフォーマットとメッセージフォーマット（ネットワーク経由で伝達されるメッセージを規定）
+	
+	7.2 CSV
+		connma-separated value
+
+	7.3 プロパティファイル形式
+		key = (:) value  拡張子は.propaties
+		Propatiesクラス
+			load(FileReader)で読み込み→ getPropaty(key)で取得（すべてString)
+			setPropaty(key)でセット → store(FileWriter,コメント)で出力
+
+	7.4 XML
+		ネストさせたい場合はXMLを用いる。
+
+	7.5 オブジェクトの直列化
+		インスタンスをそのままバイト列に変換（直列化serialization）して、ファイル保存やネットワークで伝達する。
+
+		・implements Serializable
+		・serialVersionUID = 好きな値　インスタンスのフィールドが変更されると復元できない→UIDを変更して例外を発生させる
+		・new ObjectInputStream(流入先）やnew ObjectOutputStream(送り先）を用いて(使用方法はInputStreamなどと同じ)、バイト列をやりとり
+
+		※例外
+		・Serializableを実装していないクラスのフィールド（すべてのフィールドのobjectをimplementsする）
+		・staticのついたフィールドは直列化されない
+		・transientのついたフィールドは直列化されない
+
+8章　ネットワーク通信
+	java.netパッケージ
+	・高水準API
+		URL 画面に表示したいだけ（簡単に利用）
+	・低水準API
+		InetAddress,Proxy,Socket 細かいことをしたい場合（IPアドレス、ポートなどの設定必要）
+
+	8.1 URLを用いたHTMLの取得
+		URL url = new URL("http...");
+		InputStreamReader is = url.openStream();//webを流入源にしたストリーム
+		String data = is.read();
