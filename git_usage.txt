@@ -1,4 +1,5 @@
-gitの練習だよ！！
+Gitの練習
+
 add 変更をindexに登録する
 pull リモートリポジトリの内容を取得
 commit indexの状態を記録する
