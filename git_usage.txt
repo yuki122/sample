@@ -1,4 +1,5 @@
-gitの練習だよ！！
+Gitの練習
+
 add 変更をindexに登録する
 pull リモートリポジトリの内容を取得
 commit indexの状態を記録する
@@ -9,8 +10,8 @@ branch  ブランチを見る
 	-d ブランチを削除
 	-f [branch1] [branch2] branch1をbranch2に移動させる
 checkout ブランチの切り替え
-	-b　ブランチを作って切り替え
-	-f　直前のcommit以後の作業を全てクリアする
+	-b ブランチを作って切り替え
+	-f 直前のcommit以後の作業を全てクリアする
 reset [commit] HEADとindexの位置を[commit]に変更する
 		commit する前ならreset HEADでindexのみ動かせるのでaddを取り消せる
 	--soft HEADの位置のみを変更する
