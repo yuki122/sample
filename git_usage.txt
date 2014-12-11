@@ -8,6 +8,8 @@ commit indexの状態を記録する
 branch  ブランチを見る
 	+ [brandh] ブランチを作る
 	-d ブランチを削除
+		リモートを削除する場合は、ローカルを削除した後に
+		git push origin [branch]
 	-f [branch1] [branch2] branch1をbranch2に移動させる
 checkout ブランチの切り替え
 	-b ブランチを作って切り替え
