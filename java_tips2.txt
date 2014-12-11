@@ -126,3 +126,35 @@
 		URL url = new URL("http...");
 		InputStreamReader is = url.openStream();//webを流入源にしたストリーム
 		String data = is.read();
+
+	8.2 Socketを用いた低水準アクセス
+		プロトコル：コンピュータ同士の通信手順のルール
+			TCP/IP インターネットで使われるプロトコル
+
+		サーバーへの接続要求には以下の二つの情報が必要
+		・IPアドレス
+			コンピュータごとの番号（どの相手に接続したいか）
+		・ポート
+			コンピュータには、様々なプログラムが待ち構えている。
+			そのうち度のサービスを使うのかを指定。webページの要求に対するサービスは80番ポート。
+
+		Socket socket = new Socket(IP,port);
+
+		InputStream is = socket.getInputStream();
+		OutputStream os = socket.getOutputStream();
+
+		int i = is.read();
+		os.write(入力);
+
+		socket.close();
+
+		上位プロトコル：どういった情報を送ればいいのか
+			HTTP : webページの取得
+			SMTP : メールの送信
+			FTP : ファイルの伝送
+			SSH : リモートログイン
+
+	8.3 ServerSocketを使ったサーバー
+		略
+
+9章　データベース
