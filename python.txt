@@ -13,6 +13,9 @@
 
 <ディクショナリ>
 
+enumerate
+
+
 <クラス>
 
 <ファイル操作>
@@ -22,5 +25,14 @@
 
 
 <ライブラリ>
-
-
+--> xml.etree.ElementTree
+	---xml.etree.ElementTree.fromstring(text)
+		xml断片を構造解析し、ElementTreeオブジェクトを返すメソッド
+	--xml.etree.ElementTree.attrib
+		elementのアトリビュート(属性)を保持する辞書(これをかかないとattributeをとれない)
+	--xml.etree.ElementTree.keys()
+		elementのアトリビュート名をリストとして返す（順序は問わない）
+	--xml.etree.ElementTree.set(key,value)
+		elementのアトリビュートkeyにvalueをセットする
+	--xml.etree.ElementTree.values()
+		elementのattributeの値(value)をリストで返す
