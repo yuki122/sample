@@ -37,3 +37,15 @@ setdefaultメソッド
 		elementのアトリビュートkeyにvalueをセットする
 	--xml.etree.ElementTree.values()
 		elementのattributeの値(value)をリストで返す
+
+--> MeCab
+	--MeCab.Tagger(引数)
+		-Ochasen:すもも　スモモ　すもも　名詞-一般
+		-mecabrc:すもも　名詞,一般,?,?,?,?,すもも,スモモ,スモモ
+		-Owakati:すもも　も　もも　も　もも　の　うち（単語ごとに分割）
+	--MeCab.parseToNode(引数)
+		--MeCab.nodeクラスを出力。出力形式は、
+		表層形tab品詞、品詞細分類123,活用形、活用型、原型、読み、発音
+		node.surfaceで表層形(すもも、とか)を、各性質はnode.featureでコンマ区切りのリストでgetできる
+		node.feature[0]は品詞名
+		
